@@ -1,0 +1,16 @@
+{
+  "web": {
+    "client_id": "997109552816-h1d7uvu4o0j1asn5q18fb244tm0gcfci.apps.googleusercontent.com",
+    "project_id": "ayojok-196608",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "GoQ6jQBc6z3RvCm0ay2VvKUx",
+    "redirect_uris": [
+      "https://ayojok.com/login/google/callback"
+    ],
+    "javascript_origins": [
+      "https://ayojok.com"
+    ]
+  }
+}

@@ -1,0 +1,366 @@
+.my-account p{
+  font-weight: 500;
+  border-bottom: 1px solid gray;
+}
+
+.myAccountList li {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.myAccountList li a {
+    font-size: 18px;
+    font-weight: 400;
+    display: block;
+    color: #000000;
+}
+
+.myAccountList .thumbnail {
+    padding: 25px;
+    height: 100%;
+    border: 1px solid rgba(244, 127, 32, 0.5);
+    margin: 5px;
+}
+
+.myAccountList .thumbnail:hover {
+    background: #f9f9f9;
+}
+
+.myAccountList li a i {
+    display: block;
+    clear: both;
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.qntcounter{
+  width:10em;
+}
+
+/* breadcrumb */
+.breadcrumb {
+    border: 1px solid #DDDDDD;
+    background: none;
+    width: 100%;
+}
+
+.form-group label{
+  font-weight: 500;
+}
+
+.breadcrumb > li {
+        font-size: 14px;
+        display: inline-block;
+    }
+
+    .breadcrumb > li + li:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: "/\00a0";
+}
+
+p.required, .required sup {
+    color: #E74C3C;
+}
+
+.pager{
+  padding-left: 0;
+    margin: 50px 0;
+    text-align: center;
+    list-style: none;
+}
+.pager li{
+  list-style: none;
+}
+.pager li > a{
+  padding: 12px;
+    border: 1px solid rgba(244, 127, 32, 0.3);
+    border-radius: 5px;
+    font-weight: 400;
+}
+
+.pager li > a:hover{
+  color: #fff;
+  background-color:rgb(244, 127, 32);
+}
+
+.user-info .card .card-header{
+  background: rgb(244, 127, 32);
+  color: #fff;
+  border-color: rgb(244, 127, 32);
+}
+
+.my-address .card .card-body li {
+  list-style: none;
+}
+
+.add-addressbtn{
+  margin: 20px 0;
+      color: #f47f20;
+      width: 100%;
+      padding: 1rem;
+      background: none;
+      border: 1px solid rgb(244, 127, 32);
+}
+
+.add-addressbtn:hover{
+  background: #fff;
+}
+
+
+.account-option li{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.productDetails{
+padding: 20px 20px 20px 0;
+}
+
+.productThumb img{
+  width: 8rem;
+}
+
+.btn-regular{
+  font-weight: 900;
+    padding: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 0;
+    border: 1px solid rgb(244, 127, 32);
+    font-size: 0.8rem;
+}
+
+.btn-proceed{
+  color: rgb(244, 127, 32);
+  border: 1px solid rgb(244, 127, 32);
+  font-size: 12px;
+}
+
+.couponForm input[type="text"]{
+      height: 39px;
+      padding: 8px;
+}
+.couponForm .btn {
+    border-radius: 0 3px 3px 0;
+    padding: 10px;
+    font-size: 14px;
+    margin-left: -5px;
+    margin-top: -3px;
+}
+
+/* Order Step */
+.orderStep {
+    clear: both;
+    display: inline-block;
+    height: auto;
+    padding: 0;
+    width: 100%;
+}
+
+.orderStep li {
+    display: inline-block;
+    float: left;
+    height: auto;
+    margin: 0;
+    min-height: 55px;
+    padding: 0;
+    width: 25%;
+}
+
+.orderStep li.active a {
+    color: #fff;
+}
+
+.orderStep li.active a {
+    position: relative;
+}
+
+.orderStep li.active a:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(136, 183, 213, 0);
+    border-width: 10px;
+    margin-left: -10px;
+}
+
+.orderStep li a {
+    background: rgb(244, 127, 32);
+    display: inline-block;
+    font-size: 14px;
+    height: 100%;
+    line-height: normal;
+    padding: 20px 0 0;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.orderStep li a i {
+    background: rgba(34, 40, 49,0.05);
+}
+
+.orderStep li.active a i {
+    background: rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.orderStep li a i {
+    border-radius: 0;
+    display: block;
+    font-size: 20px;
+    height: auto;
+    left: 0;
+    line-height: 40px;
+    margin-top: -20px;
+    padding: 0;
+    text-align: center;
+    width: auto;
+    float: none !important;
+    color: rgb(34, 40, 49);
+}
+
+.orderStep li a span {
+    display: block;
+    padding: 5px 0;
+    color: rgb(34, 40, 49);
+    font-weight: 500;
+}
+
+.orderStep li.active a span {
+    color: #ffffff;
+    background: rgba(34, 40, 49,0.05);;
+}
+
+/* The container */
+.checkout-address .container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkout-address .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: rgba(244, 127, 32,0.1);
+    border: 1px solid rgb(244, 127, 32);
+}
+
+.checkradio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: rgba(244, 127, 32,0.1);
+    border: 1px solid rgb(244, 127, 32);
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.checkout-address .container:hover input ~ .checkmark, .checkout-address .container:hover input ~ .checkradio {
+    background-color: #fff;
+}
+
+/* When the checkbox is checked, add a theme background */
+.checkout-address .container input:checked ~ .checkmark, .checkout-address .container input:checked ~ .checkradio {
+    background-color: rgb(244, 127, 32);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after,.checkradio:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkout-address .container input:checked ~ .checkmark:after, .checkout-address .container input:checked ~ .checkradio:after {
+    display: block;
+}
+
+
+/* Style the checkmark/indicator */
+.checkout-address .container .checkmark:after, .checkout-address .container .checkradio:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#accordion button{
+  color:rgb(244, 127, 32);
+}
+
+#accordion .card-header{
+  border-top: 3px solid rgb(244, 127, 32);
+}
+
+@media screen and (max-width: 620px) {
+    .myAccountList li a i {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (min-width: 620px) {
+
+}
+.like {
+  background: #f2f2f2;
+  /* padding: 1em 1em; */
+  font-size: 2.5em;
+  color:rgb(244, 127, 32);
+  border: none;
+  text-transform: UPPERCASE;
+  font-weight: bold;
+  color: #fff;
+  -webkit-transition: background .3s ease;
+  transition: background .3s ease;
+}
+.vertical-links{
+  overflow-y: scroll;
+  height:30%;
+}
+
+.vertical-links .card{
+  margin-bottom: 5px;
+}
+.vertical-links {
+    -ms-overflow-style: none;  // IE 10+
+    overflow: -moz-scrollbars-none;  // Firefox
+}
+.vertical-links::-webkit-scrollbar {
+    display: none;  // Safari and Chrome
+}
