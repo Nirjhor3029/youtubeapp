@@ -239,8 +239,11 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::post('/admin/add-user-submit', 'AdminUsers@addNewUserSubmit')->name('addNewUserSubmit');
 
     Route::get('/admin/vdo-categories', 'AdminUsers@showVideoCategories')->name('videoCategories');
-    //Route::get('/admin/add-user', 'AdminUsers@addNewUser')->name('addNewUser');
-    //Route::post('/admin/add-user-submit', 'AdminUsers@addNewUserSubmit')->name('addNewUserSubmit');
+    Route::get('/admin/add-vdocategory', 'AdminUsers@addNewCategory')->name('addNewCategory');
+    Route::post('/admin/add-dvocategory-submit', 'AdminUsers@addCategorySubmit')->name('addCategorySubmit');
+    Route::get('/admin/delete-vdocategory/{id}', 'AdminUsers@deleteVideoCategory')->name('deleteVideoCategory');
+    Route::get('/admin/edit-vdocategory/{id}', 'AdminUsers@editVideoCategory')->name('editVideoCategory');
+    Route::post('/admin/edit-vdocategorysubmit/{id}', 'AdminUsers@editVideoCategorySubmit')->name('editVideoCategorySubmit');
 
 
 
