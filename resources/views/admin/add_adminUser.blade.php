@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
 
-                                <input type="file">
+                                {{--<input type="file">--}}
                             </div>
 
                             <div class="col-md-6" >
