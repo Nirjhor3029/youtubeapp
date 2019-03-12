@@ -4,22 +4,31 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVdoCategoriesTable extends Migration
+class CreateVdoSubCategoriesTable extends Migration
 {
-
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::create('vdo_categories', function (Blueprint $table) {
+        Schema::create('vdo_sub_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('VdoCategory_id');
             $table->string('title');
             $table->string('image');
             $table->timestamps();
         });
     }
 
-
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::dropIfExists('vdo_categories');
+        Schema::dropIfExists('vdo_sub_categories');
     }
 }

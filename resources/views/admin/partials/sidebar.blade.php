@@ -41,6 +41,11 @@
                     <i class="fa fa-dashboard"></i> <span>Video Categories</span>
                 </a>
             </li>
+            <li>
+                <a href="{{route('showVideoSubCategories')}}">
+                    <i class="fa fa-dashboard"></i> <span>Video Sub Categories</span>
+                </a>
+            </li>
 
             {{-- Client Menu --}}
             <li class="treeview">

@@ -33,8 +33,6 @@ Route::get('/test2', function () {
 /*nir test rough*/
 
 
-
-
 Route::post('/find', 'IndexController@open')->name('find');
 
 Route::post('/event-coordinator', 'MailController@postContact');
@@ -154,9 +152,9 @@ Route::group(['middleware' => ['auth']], function () {
     //SSLCOMMERZ END
     Route::POST('/success-checkout', 'CheckoutController@paidOnline')->name('checkout');
 
-    Route::get('/payment/success/','OrderController@paySuccess')->name('paySuccess');
-    Route::get('/payment/fail/','OrderController@payFail');
-    Route::get('/payment/cancel/','OrderController@payCancel');
+    Route::get('/payment/success/', 'OrderController@paySuccess')->name('paySuccess');
+    Route::get('/payment/fail/', 'OrderController@payFail');
+    Route::get('/payment/cancel/', 'OrderController@payCancel');
     /*End of  Payments code*/
 
     Route::resource('/wishlist', 'WishlistController', ['except' => ['create', 'edit', 'show', 'update']]);
@@ -234,18 +232,28 @@ Route::group(['middleware' => ['auth:admin']], function () {
     })->name('admindash');
 
 
+    /*nir*/
     Route::get('/admin/users', 'AdminUsers@showPage')->name('userList');
     Route::get('/admin/add-user', 'AdminUsers@addNewUser')->name('addNewUser');
     Route::post('/admin/add-user-submit', 'AdminUsers@addNewUserSubmit')->name('addNewUserSubmit');
 
     Route::get('/admin/vdo-categories', 'AdminUsers@showVideoCategories')->name('videoCategories');
     Route::get('/admin/add-vdocategory', 'AdminUsers@addNewCategory')->name('addNewCategory');
-    Route::post('/admin/add-dvocategory-submit', 'AdminUsers@addCategorySubmit')->name('addCategorySubmit');
+    Route::post('/admin/add-vdocategory-submit', 'AdminUsers@addCategorySubmit')->name('addCategorySubmit');
     Route::get('/admin/delete-vdocategory/{id}', 'AdminUsers@deleteVideoCategory')->name('deleteVideoCategory');
     Route::get('/admin/edit-vdocategory/{id}', 'AdminUsers@editVideoCategory')->name('editVideoCategory');
     Route::post('/admin/edit-vdocategorysubmit/{id}', 'AdminUsers@editVideoCategorySubmit')->name('editVideoCategorySubmit');
 
 
+
+    Route::get('/admin/vdo-subcategories', 'AdminUsers@showVideoSubCategories')->name('showVideoSubCategories');
+    Route::get('/admin/add-subcategory', 'AdminUsers@addNewSubCategory')->name('addNewSubCategory');
+    Route::post('/admin/add-subcategory-submit', 'AdminUsers@addSubCategorySubmit')->name('addSubCategorySubmit');
+    Route::get('/admin/delete-subcategory/{id}', 'AdminUsers@deleteVideoSubCategory')->name('deleteVideoSubCategory');
+    Route::get('/admin/edit-subcategory/{id}', 'AdminUsers@editVideoSubCategory')->name('editVideoSubCategory');
+    Route::post('/admin/edit-subcategory-submit/{id}', 'AdminUsers@editVideoSubCategorySubmit')->name('editVideoSubCategorySubmit');
+
+    /*nir*/
 
 
     Route::get('/admin/client', 'ClientController@show')->name('client');

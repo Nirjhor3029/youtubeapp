@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin;
 use App\VdoCategory;
+use App\VdoSubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -54,11 +55,11 @@ class AdminUsers extends Controller
 
     }
 
+    /*Category*/
     public function showVideoCategories(){
         $vdo_categories = VdoCategory::all();
         return view('admin.vdo_categories')->with('vdo_categories',$vdo_categories);
     }
-
     public function addNewCategory(){
         //$vdo_categories = VdoCategory::all();
         return view('admin.add_videoCategory');
@@ -92,8 +93,6 @@ class AdminUsers extends Controller
         return Redirect::to('admin/vdo-categories');
 
     }
-
-
     public function deleteVideoCategory($id){
         $vdo_category = VdoCategory::find($id);
         //exit;
@@ -132,6 +131,91 @@ class AdminUsers extends Controller
         $vdo_category->save();
 
         return Redirect::to('admin/vdo-categories');
+    }
+
+
+
+    /*Sub Category*/
+    public function showVideoSubCategories(){
+        $vdo_categories = VdoSubCategory::all();
+        return view('admin.vdo_subcategories')->with('vdo_categories',$vdo_categories);
+    }
+    public function addNewSubCategory(){
+        $vdo_categories = VdoCategory::all();
+        return view('admin.add_videoSubCategory')->with('vdo_categories',$vdo_categories);
+    }
+    public function addSubCategorySubmit(Request $request){
+        //return $request;
+
+
+        $fileurl = "";
+        /** Update Profile Image **/
+        if ($request->hasFile('profile_image')) {
+            $path = $this->getPath();
+            $destinationPath = $path . '/img/subcategory_images/';
+            $image = $request->file('profile_image');
+            $input['imagename'] = date('d_m_y_his') . '_' .$image->getClientOriginalName() ; //. $image->getClientOriginalExtension();
+            //echo $input['imagename'];
+            if ($image->move($destinationPath, $input['imagename'])) {
+                $fileurl = 'img\subcategory_images\\' . $input['imagename'];
+                //echo $fileurl;
+                //vendors::where('id', $add->id)->update(['profile_img' => $fileurl]);
+            } else {
+                echo "Error";
+            }
+        }
+
+        $vdo_category = new VdoSubCategory();
+        $vdo_category->VdoCategory_id = $request->category_id;
+        $vdo_category->title = $request->vendor_title;
+        $vdo_category->image = $fileurl;
+        $vdo_category->save();
+
+        return Redirect::to('admin/vdo-subcategories');
+
+    }
+    public function deleteVideoSubCategory($id){
+        $vdo_category = VdoSubCategory::find($id);
+        //exit;
+        $vdo_category->delete();
+        return Redirect::back();
+    }
+    public function editVideoSubCategory($id){
+
+        $vdo_categories = VdoCategory::all();
+
+        $vdo_category = VdoSubCategory::find($id);
+        //$vdo_category->delete();
+        return view('admin.add_videoSubCategory')->with('vdo_category',$vdo_category)->with('vdo_categories',$vdo_categories);
+
+    }
+    public function editVideoSubCategorySubmit(Request $request,$id){
+        //echo $id;
+        $vdo_category = VdoSubCategory::find($id);
+
+        $vdo_category->VdoCategory_id = $request->category_id;
+        $vdo_category->title = $request->vendor_title;
+
+        /** Update Profile Image **/
+        if ($request->hasFile('profile_image')) {
+            $path = $this->getPath();
+            $destinationPath = $path . '/img/subcategory_images/';
+            $image = $request->file('profile_image');
+            $input['imagename'] = date('d_m_y_his') . '_' .$image->getClientOriginalName() ; //. $image->getClientOriginalExtension();
+            //echo $input['imagename'];
+            if ($image->move($destinationPath, $input['imagename'])) {
+                $fileurl = 'img\subcategory_images\\' . $input['imagename'];
+                $vdo_category->image = $fileurl;
+                //echo $fileurl;
+                //vendors::where('id', $add->id)->update(['profile_img' => $fileurl]);
+            } else {
+                echo "Error";
+            }
+        }
+
+        $vdo_category->save();
+
+        return Redirect::to('admin/vdo-subcategories');
     }
 
 
