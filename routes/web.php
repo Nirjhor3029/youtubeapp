@@ -253,6 +253,16 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/admin/edit-subcategory/{id}', 'AdminUsers@editVideoSubCategory')->name('editVideoSubCategory');
     Route::post('/admin/edit-subcategory-submit/{id}', 'AdminUsers@editVideoSubCategorySubmit')->name('editVideoSubCategorySubmit');
 
+
+
+
+    Route::get('/admin/tags', 'AdminUsers@showTags')->name('showTags');
+    Route::get('/admin/add-tag', 'AdminUsers@addNewTag')->name('addNewTag');
+    Route::post('/admin/add-tag-submit', 'AdminUsers@addTagSubmit')->name('addTagSubmit');
+    Route::get('/admin/delete-tag/{id}', 'AdminUsers@deleteTag')->name('deleteTag');
+    Route::get('/admin/edit-tag/{id}', 'AdminUsers@editTag')->name('editTag');
+    Route::post('/admin/edit-tag-submit/{id}', 'AdminUsers@editTagSubmit')->name('editTagSubmit');
+
     /*nir*/
 
 
