@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\AppUserToken;
+use App\Tag;
 use App\VdoCategory;
 use App\VdoSubCategory;
 use Illuminate\Http\Request;
@@ -251,14 +253,14 @@ class AdminUsers extends Controller
     /*Tags*/
     public function showTags()
     {
-        $vdo_categories = VdoSubCategory::all();
-        return view('admin.vdo_subcategories')->with('vdo_categories', $vdo_categories);
+        $vdo_categories = Tag::all();
+        return view('admin.vdo_tags')->with('vdo_categories', $vdo_categories);
     }
 
     public function addNewTag()
     {
-        $vdo_categories = VdoCategory::all();
-        return view('admin.add_videoSubCategory')->with('vdo_categories', $vdo_categories);
+
+        return view('admin.add_videoTag');
     }
 
     public function addTagSubmit(Request $request)
@@ -266,36 +268,17 @@ class AdminUsers extends Controller
         //return $request;
 
 
-        $fileurl = "";
-        /** Update Profile Image **/
-        if ($request->hasFile('profile_image')) {
-            $path = $this->getPath();
-            $destinationPath = $path . '/img/subcategory_images/';
-            $image = $request->file('profile_image');
-            $input['imagename'] = date('d_m_y_his') . '_' . $image->getClientOriginalName(); //. $image->getClientOriginalExtension();
-            //echo $input['imagename'];
-            if ($image->move($destinationPath, $input['imagename'])) {
-                $fileurl = 'img\subcategory_images\\' . $input['imagename'];
-                //echo $fileurl;
-                //vendors::where('id', $add->id)->update(['profile_img' => $fileurl]);
-            } else {
-                echo "Error";
-            }
-        }
-
-        $vdo_category = new VdoSubCategory();
-        $vdo_category->VdoCategory_id = $request->category_id;
+        $vdo_category = new Tag();
         $vdo_category->title = $request->vendor_title;
-        $vdo_category->image = $fileurl;
         $vdo_category->save();
 
-        return Redirect::to('admin/vdo-subcategories');
+        return Redirect::to('admin/tags');
 
     }
 
     public function deleteTag($id)
     {
-        $vdo_category = VdoSubCategory::find($id);
+        $vdo_category = Tag::find($id);
         //exit;
         $vdo_category->delete();
         return Redirect::back();
@@ -304,42 +287,83 @@ class AdminUsers extends Controller
     public function editTag($id)
     {
 
-        $vdo_categories = VdoCategory::all();
 
-        $vdo_category = VdoSubCategory::find($id);
+        $vdo_category = Tag::find($id);
         //$vdo_category->delete();
-        return view('admin.add_videoSubCategory')->with('vdo_category', $vdo_category)->with('vdo_categories', $vdo_categories);
+        return view('admin.add_videoTag')->with('vdo_category', $vdo_category);
 
     }
 
     public function editTagSubmit(Request $request, $id)
     {
         //echo $id;
-        $vdo_category = VdoSubCategory::find($id);
+        $vdo_category = Tag::find($id);
 
-        $vdo_category->VdoCategory_id = $request->category_id;
         $vdo_category->title = $request->vendor_title;
-
-        /** Update Profile Image **/
-        if ($request->hasFile('profile_image')) {
-            $path = $this->getPath();
-            $destinationPath = $path . '/img/subcategory_images/';
-            $image = $request->file('profile_image');
-            $input['imagename'] = date('d_m_y_his') . '_' . $image->getClientOriginalName(); //. $image->getClientOriginalExtension();
-            //echo $input['imagename'];
-            if ($image->move($destinationPath, $input['imagename'])) {
-                $fileurl = 'img\subcategory_images\\' . $input['imagename'];
-                $vdo_category->image = $fileurl;
-                //echo $fileurl;
-                //vendors::where('id', $add->id)->update(['profile_img' => $fileurl]);
-            } else {
-                echo "Error";
-            }
-        }
 
         $vdo_category->save();
 
-        return Redirect::to('admin/vdo-subcategories');
+        return Redirect::to('admin/tags');
+    }
+
+
+
+
+
+    /*App User Tokens*/
+    public function appUsersToken()
+    {
+        $vdo_categories = AppUserToken::all();
+        return view('admin.app_tokens')->with('vdo_categories', $vdo_categories);
+    }
+
+    public function addAppUsersToken()
+    {
+
+        return view('admin.add_AppUserToken');
+    }
+
+    public function addAppUsersTokenSubmit(Request $request)
+    {
+        //return $request;
+
+
+        $vdo_category = new AppUserToken();
+        $vdo_category->app_token = $request->vendor_title;
+        $vdo_category->save();
+
+        return Redirect::to('admin/appUsersToken');
+
+    }
+
+    public function deleteAppUsersToken($id)
+    {
+        $vdo_category = AppUserToken::find($id);
+        //exit;
+        $vdo_category->delete();
+        return Redirect::back();
+    }
+
+    public function editAppUsersToken($id)
+    {
+
+
+        $vdo_category = AppUserToken::find($id);
+        //$vdo_category->delete();
+        return view('admin.add_AppUserToken')->with('vdo_category', $vdo_category);
+
+    }
+
+    public function editAppUsersTokenSubmit(Request $request, $id)
+    {
+        //echo $id;
+        $vdo_category = AppUserToken::find($id);
+
+        $vdo_category->app_token = $request->vendor_title;
+
+        $vdo_category->save();
+
+        return Redirect::to('admin/appUsersToken');
     }
 
 

@@ -85,13 +85,12 @@
                                     </div>
                                 </div>
 
-
                                 <div>
                                     <button class="btn btn-primary pull-right" type="submit">Upload Sub Category</button>
                                 </div>
                             </form>
                         @else
-                            <form action="{{route('editVideoSubCategory',$vdo_category->id)}}" method="post"
+                            <form action="{{route('editVideoSubCategorySubmit',$vdo_category->id)}}" method="post"
                                   class="form-horizontal"
                                   enctype="multipart/form-data">
                                 {{ csrf_field() }}

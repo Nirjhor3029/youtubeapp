@@ -263,6 +263,19 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/admin/edit-tag/{id}', 'AdminUsers@editTag')->name('editTag');
     Route::post('/admin/edit-tag-submit/{id}', 'AdminUsers@editTagSubmit')->name('editTagSubmit');
 
+
+
+
+
+    Route::get('/admin/appUsersToken', 'AdminUsers@appUsersToken')->name('appUsersToken');
+    Route::get('/admin/add-appUsersToken', 'AdminUsers@addAppUsersToken')->name('addAppUsersToken');
+    Route::post('/admin/add-appUsersToken-submit', 'AdminUsers@addAppUsersTokenSubmit')->name('addAppUsersTokenSubmit');
+    Route::get('/admin/delete-appUsersToken/{id}', 'AdminUsers@deleteAppUsersToken')->name('deleteAppUsersToken');
+    Route::get('/admin/edit-appUsersToken/{id}', 'AdminUsers@editAppUsersToken')->name('editAppUsersToken');
+    Route::post('/admin/edit-appUsersToken-submit/{id}', 'AdminUsers@editAppUsersTokenSubmit')->name('editAppUsersTokenSubmit');
+
+
+
     /*nir*/
 
 

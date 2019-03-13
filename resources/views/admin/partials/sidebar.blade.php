@@ -46,6 +46,16 @@
                     <i class="fa fa-dashboard"></i> <span>Video Sub Categories</span>
                 </a>
             </li>
+            <li>
+                <a href="{{route('showTags')}}">
+                    <i class="fa fa-dashboard"></i> <span>Video Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('appUsersToken')}}">
+                    <i class="fa fa-dashboard"></i> <span>App User Tokens</span>
+                </a>
+            </li>
 
             {{-- Client Menu --}}
             <li class="treeview">
