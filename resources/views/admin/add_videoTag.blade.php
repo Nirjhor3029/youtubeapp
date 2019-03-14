@@ -35,8 +35,7 @@
                 <div class="box box-primary">
                     <div class="box-body" style="margin-top:2rem;">
                         @if(!isset($vdo_category))
-                            <form action="{{route('addTagSubmit')}}" method="post" class="form-horizontal"
-                                  enctype="multipart/form-data">
+                            <form action="{{route('addTagSubmit')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="row form-group">
                                     <div class="col-sm-2">
