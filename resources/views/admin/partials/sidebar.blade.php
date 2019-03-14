@@ -1,4 +1,11 @@
+<style>
+    .hide{
+        display: none;
+    }
+</style>
+
 <aside class="main-sidebar">
+
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- Sidebar user panel -->
@@ -57,8 +64,14 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{route('videos')}}">
+                    <i class="fa fa-dashboard"></i> <span>Video List</span>
+                </a>
+            </li>
+
             {{-- Client Menu --}}
-            <li class="treeview">
+            <li class="treeview hide">
                 <a href="#">
                     <i class="fa fa-user-secret"></i>
                     <span>Client</span>

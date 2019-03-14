@@ -275,6 +275,14 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::post('/admin/edit-appUsersToken-submit/{id}', 'AdminUsers@editAppUsersTokenSubmit')->name('editAppUsersTokenSubmit');
 
 
+    Route::get('/admin/videos', 'VideoController@videos')->name('videos');
+    Route::get('/admin/add-video', 'VideoController@addVideo')->name('addVideo');
+    Route::post('/admin/add-video-submit', 'VideoController@addVideoSubmit')->name('addVideoSubmit');
+    Route::get('/admin/delete-video/{id}', 'VideoController@deleteVideo')->name('deleteVideo');
+    Route::get('/admin/edit-video/{id}', 'VideoController@editVideo')->name('editVideo');
+    Route::post('/admin/edit-video-submit/{id}', 'VideoController@editVideoSubmit')->name('editVideoSubmit');
+
+
 
     /*nir*/
 
