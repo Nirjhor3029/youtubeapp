@@ -13,13 +13,13 @@ class VideoController extends Controller
     public function videos()
     {
         $vdo_categories = Tag::all();
-        return view('admin.vdo_tags')->with('vdo_categories', $vdo_categories);
+        return view('admin.videos')->with('vdo_categories', $vdo_categories);
     }
 
     public function addVideo()
     {
 
-        return view('admin.add_videoTag');
+        return view('admin.add_video');
     }
 
     public function addVideoSubmit(Request $request)
