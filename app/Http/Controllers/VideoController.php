@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Tag;
+use App\TagVideo;
+use App\VdoCategory;
+use App\VdoSubCategory;
+use App\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class VideoController extends Controller
 {
@@ -12,9 +17,10 @@ class VideoController extends Controller
     /*Video Basic Crud*/
     public function videos()
     {
-        $vdo_categories = Tag::all();
-        return view('admin.videos')->with('vdo_categories', $vdo_categories);
+        $videos = Video::all();
+        return view('admin.videos')->with('videos',$videos);
     }
+
 
     public function addVideo()
     {
@@ -22,14 +28,71 @@ class VideoController extends Controller
         return view('admin.add_video');
     }
 
+    public function getVideoInfo(Request $request){
+
+        $videoUrl = $request->video_url;
+
+        //echo $videoUrl;
+        $videoId = explode('=',$videoUrl);
+        $videoId = $videoId[1];
+        //print_r($videoId);
+
+        //exit;
+
+
+        $str = file_get_contents('https://www.youtube.com/oembed?url='.$videoUrl.'&format=json');
+
+        //return $str;
+        $videoInfo = \GuzzleHttp\json_decode($str);
+
+        $tags = Tag::all();
+        $categories = VdoCategory::all();
+        $sub_categories = VdoSubCategory::all();
+
+        return view('admin.add_video')
+            ->with('videoId',$videoId)
+            ->with('videoUrl',$videoUrl)
+            ->with('videoInfo',$videoInfo)
+            ->with('categories',$categories)
+            ->with('sub_categories',$sub_categories)
+            ->with('tags',$tags);
+
+        //print_r($str) ;
+        //$thumbnail_url = $str->$thumbnail_url;
+        //$author_url = $str->author_url;
+        //return $str->thumbnail_width;
+
+    }
+
     public function addVideoSubmit(Request $request)
     {
         //return $request;
 
+        $video = new Video();
 
-        $vdo_category = new Tag();
-        $vdo_category->title = $request->vendor_title;
-        $vdo_category->save();
+        $video->video_id = $request->video_id;
+        $video->category_id = $request->category;
+        $video->sub_category_id = $request->sub_category;
+        $video->video_url = $request->video_url;
+        $video->video_author_url  = $request->author_url;
+        $video->video_author_name  = $request->author_name;
+        $video->title = $request->title;
+        $video->description = $request->description;
+        $video->thumbnail_url = $request->thumbnail_url;
+        $video->video_length = $request->video_length;
+        $video->save();
+
+        foreach($request->tags as $tag){
+
+            $tag_video = new TagVideo();
+            $tag_video->video_id = $video->id;
+            $tag_video->tag_id = $tag;
+
+            $tag_video->save();
+
+        }
+
+
 
         return Redirect::to('admin/tags');
 

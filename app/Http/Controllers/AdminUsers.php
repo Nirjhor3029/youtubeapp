@@ -156,6 +156,7 @@ class AdminUsers extends Controller
     public function showVideoSubCategories()
     {
         $vdo_categories = VdoSubCategory::all();
+        //return $vdo_categories;
         return view('admin.vdo_subcategories')->with('vdo_categories', $vdo_categories);
     }
 

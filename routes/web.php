@@ -282,6 +282,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/admin/edit-video/{id}', 'VideoController@editVideo')->name('editVideo');
     Route::post('/admin/edit-video-submit/{id}', 'VideoController@editVideoSubmit')->name('editVideoSubmit');
 
+    Route::post('/admin/get-videoInfo-submit', 'VideoController@getVideoInfo')->name('getVideoInfo');
+
 
 
     /*nir*/
