@@ -9,7 +9,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   {{--<title>{{ config('app.name', 'Ayojok | One Stop Solution for you event') }}</title>--}}
-  <title>Ayojok | One Stop Solution for your event</title>
+  <title>Youtube App</title>
 
 
   <!-- Bootstrap 3.3.7 -->
@@ -63,7 +63,7 @@
       <div class="pull-right hidden-xs">
         <b>Version</b> 1.0.0
       </div>
-      <strong>Copyright &copy; {{date('Y')}} <a href="https://ayojok.com">Ayojok</a>.</strong> All rights
+      <strong>Copyright &copy; {{date('Y')}} <a href="#">YoutubeApp</a>.</strong> All rights
       reserved.
     </footer>
 

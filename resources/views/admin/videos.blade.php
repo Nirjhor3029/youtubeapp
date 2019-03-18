@@ -49,6 +49,7 @@
                                 <th>Video Id</th>
                                 <th>Category</th>
                                 <th>Sub Category</th>
+                                <th>Tags</th>
                                 <th>Video Url</th>
                                 <th>Video Author Url</th>
                                 <th>Video Author Name</th>
@@ -65,6 +66,15 @@
                                     <td>{{$video->id}}</td>
                                     <td>{{$video->video_id}}</td>
                                     <td>{{$video->category_id}}</td>
+                                    <td>
+                                        <?php
+                                            $tags = "";
+                                            foreach($video->tags as $tag){
+                                                $tags = $tags.",".$tag->title;
+                                            }
+                                        ?>
+                                        {{$tags}}
+                                    </td>
                                     <td>{{$video->sub_category_id}}</td>
                                     <td>{{$video->video_url}}</td>
                                     <td>{{$video->video_author_url}}</td>

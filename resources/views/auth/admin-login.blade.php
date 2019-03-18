@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <!-- Site Properties -->
-  <title>Ayojok | One Stop Solutions</title>
+  <title>Youtube App</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -19,7 +19,7 @@
     {{--<div class="col-lg-12 text-center">
       <img src="{{asset('superadmin/dist/img/logo-transparent.png')}}" alt="Ayojok Logo" style="height:8rem;">
     </div>--}}
-    <div class="row justify-content-center " style="margin-top: 30%">
+    <div class="row justify-content-center " style="margin-top: 10%">
       <div class="col-md-8" >
         <div class="card">
           <div class="card-header">{{ __('Admin Login') }}</div>

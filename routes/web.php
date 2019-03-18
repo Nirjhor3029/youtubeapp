@@ -224,6 +224,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     })->name('mainhome');
 
     Route::get('/admin', function () {
+        return \Illuminate\Support\Facades\Redirect::to('admin/videos');
         return view('admin.index');
     })->name('adminhome');
 
