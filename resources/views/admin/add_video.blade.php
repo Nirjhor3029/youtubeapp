@@ -118,13 +118,16 @@
                                             <label for="vendor_name" class="control-label">Tags<span
                                                         style="color:red;">*</span> </label>
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-8">
                                             <select class=" js-example-basic-multiple form-control" name="tags[]"
                                                     multiple="multiple" required>
                                                 @foreach($tags as $tag)
                                                     <option value="{{$tag->id}}">{{$tag->title}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Tag</a>
                                         </div>
                                     </div>
 
@@ -231,6 +234,45 @@
                         </div>
                         <!-- /.box -->
                     </div>
+            </div>
+
+
+
+            <!-- Modal -->
+            <div class="modal fade modal-primary" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Add New Tag</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{route('addTagSubmit')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <div class="row form-group">
+                                    <div class="col-sm-2">
+                                        <label for="vendor_name" class="control-label">Tag Title: <span
+                                                    style="color:red;">*</span> </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="vendor_name"
+                                               placeholder="Enter Title"
+                                               name="vendor_title" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary pull-right" type="submit">Upload Tag</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             @endif
