@@ -10,6 +10,7 @@ use App\VdoSubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use File;
 
 class AdminUsers extends Controller
 {
@@ -107,9 +108,47 @@ class AdminUsers extends Controller
 
     public function deleteVideoCategory($id)
     {
+
+
+        $path = $this->getPath();
+
         $vdo_category = VdoCategory::find($id);
         //exit;
+        //$vdo_category->vdoSubCategory()->delete();
+
+
+
+        $vdo_subCategories = VdoSubCategory::where('VdoCategory_id',$vdo_category->id)->get();
+
+        foreach($vdo_subCategories as $sub_category){
+
+
+            //echo $sub_category->title;
+
+
+            /**   Delete image from subCategory directory **/
+            $logopath = $path . '\\' . $sub_category->image;
+            $logopath = str_replace("\\", '/', $logopath);
+            if (File::exists($logopath)) {
+                File::delete($logopath);
+            }
+
+            $sub_category->delete();
+        }
+
+        //exit;
+
+        /**   Delete image from subCategory directory **/
+        $logopath = $path . '\\' . $vdo_category->image;
+        $logopath = str_replace("\\", '/', $logopath);
+        if (File::exists($logopath)) {
+            File::delete($logopath);
+        }
+
         $vdo_category->delete();
+
+
+
         return Redirect::back();
     }
 
@@ -202,6 +241,16 @@ class AdminUsers extends Controller
     {
         $vdo_category = VdoSubCategory::find($id);
         //exit;
+
+
+        $path = $this->getPath();
+
+        /**   Delete image from subCategory directory **/
+        $logopath = $path . '\\' . $vdo_category->image;
+        $logopath = str_replace("\\", '/', $logopath);
+        if (File::exists($logopath)) {
+            File::delete($logopath);
+        }
         $vdo_category->delete();
         return Redirect::back();
     }

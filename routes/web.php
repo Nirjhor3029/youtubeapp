@@ -287,6 +287,9 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
 
 
+
+
+
     /*nir*/
 
 
@@ -357,6 +360,10 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
 });
 
+/*For Youtube Api*/
+Route::get('/admin/get-categories', 'ApiController@getCategories')->name('getAllCategory');
+Route::get('/admin/get-sub-Categories', 'ApiController@getSubCategories')->name('getAllSubCategory');
+Route::get('/admin/get-videos', 'ApiController@getAllVideos')->name('getAllVideos');
 
 
 

@@ -11,4 +11,8 @@ class VdoSubCategory extends Model
         return $this->belongsTo('App\VdoCategory','VdoCategory_id');
     }
 
+    public function video(){
+        return $this->hasMany(Video::class,'sub_category_id');
+    }
+
 }

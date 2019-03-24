@@ -9,6 +9,10 @@ class VdoCategory extends Model
     //
 
     public function vdoSubCategory(){
-        return $this->hasMany('App\VdoSubCategory');
+        return $this->hasMany('App\VdoSubCategory','VdoCategory_id');
+    }
+
+    public function video(){
+        return $this->hasMany(Video::class,'category_id');
     }
 }
