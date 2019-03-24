@@ -108,8 +108,6 @@ class VideoController extends Controller
 
     public function editVideo($id)
     {
-
-
         $vdo_category = Tag::find($id);
         //$vdo_category->delete();
         return view('admin.add_videoTag')->with('vdo_category', $vdo_category);
