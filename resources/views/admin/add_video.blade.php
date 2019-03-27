@@ -107,7 +107,9 @@
                                             <select class="form-control" name="sub_category" required>
                                                 <option value="{{null}}">Select Sub Category</option>
                                                 @foreach($sub_categories as $sub_category)
-                                                    <option value="{{$sub_category->id}}">{{$sub_category->title}}( {{$sub_category->vdoCategory->title}} )</option>
+                                                    <option value="{{$sub_category->id}}">{{$sub_category->title}}
+                                                        ( {{$sub_category->vdoCategory->title}} )
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -127,7 +129,8 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Tag</a>
+                                            <a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add
+                                                Tag</a>
                                         </div>
                                     </div>
 
@@ -201,13 +204,34 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="form-group row">
+                                        <div class="control-label col-sm-2">
+                                            <label class="" for="profile_image">Thumbnail Image override:</label>
+
+                                            <p>Max (600x600)</p>
+
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="file" name="profile_image" id="profile_image" accept="image/*"
+                                                   class="form-control">
+                                        </div>
+
+                                    </div>
+
+
                                     <div class="row form-group">
                                         <div class="col-sm-2">
                                             <label for="vendor_name" class="control-label">Thumbnail View<span
                                                         style="color:red;">*</span> </label>
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-5">
                                             <img src="{{$videoInfo->thumbnail_url}}">
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label for="profile_image">Changed Image</label>
+
+                                            <div id="profile-preview"></div>
                                         </div>
                                     </div>
 
@@ -237,7 +261,6 @@
             </div>
 
 
-
             <!-- Modal -->
             <div class="modal fade modal-primary" id="myModal" role="dialog">
                 <div class="modal-dialog">
@@ -249,7 +272,8 @@
                             <h4 class="modal-title">Add New Tag</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="{{route('addTagSubmit')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                            <form action="{{route('addTagSubmit')}}" method="post" class="form-horizontal"
+                                  enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="row form-group">
                                     <div class="col-sm-2">

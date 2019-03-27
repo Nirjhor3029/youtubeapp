@@ -76,14 +76,119 @@ class ApiController extends Controller
 
         //return $categories;
     }
-    public function getSubCategories(){
+
+    public function getSubCategories(Request $request){
+
+        //echo $category_id;
+
+        //exit;
+
+        $category_id = $request->cat_id;
+
+
+
+        $SubCategoryClass = array();
+        $VideoClass = array();
+        $VideoClass_forFeature = array();
+
+
+
+        $Subcategories = VdoSubCategory::with('video')->where('VdoCategory_id',$category_id)->get();
+
+        $i = 0;
+        foreach($Subcategories as $sub_category){
+
+
+            $videos = $sub_category->video;
+
+            $j = 0;
+            $VideoClass = null;
+            foreach($videos as $video)
+            {
+
+                $VideoTags ="";
+                $tags = $video->tags;
+                foreach($tags as $tag){
+                    $VideoTags = $VideoTags .",". $tag->title;
+                }
+
+                $VideoClass[$j] = [
+                    "id" => $video->id,
+                    "title" => $video->title,
+                    "details" => $video->description,
+                    "videoUrl" => $video->video_url,
+                    "youtube_ID" => $video->video_id,
+                    "thumbnil_image_link" => $video->thumbnail_url,
+                    "tags" => $VideoTags,
+                    "cat_id" => $video->category_id,
+                    "sub_cat_id" => $video->sub_category_id,
+                    "duration" => $video->video_length,
+                    "author_name" => $video->video_author_name,
+                    "author_url" => $video->video_author_url,
+                ];
+                $j++;
+            }
 
 
 
 
-        $Subcategories = VdoSubCategory::with('video')->get();
+            $SubCategoryClass[$i]=[
+                "id" => $sub_category->id,
+                "name" => $sub_category->title,
+                "imageUrl" => 'http://youtubeapp.ovie.winexsoft.com/public/'.str_replace("\\","/",$sub_category->image),
+                "VideoClass" => $VideoClass,
 
-        return $Subcategories;
+            ];
+
+            $i++;
+        }
+
+
+
+        $VideoClass_forFeature = null;
+        foreach($Subcategories as $sub_category){
+
+
+            $videos = $sub_category->video;
+
+            $j = 0;
+            foreach($videos as $video)
+            {
+
+                $VideoTags ="";
+                $tags = $video->tags;
+                foreach($tags as $tag){
+                    $VideoTags = $VideoTags .",". $tag->title;
+                }
+
+                $VideoClass_forFeature[$j] = [
+                    "id" => $video->id,
+                    "title" => $video->title,
+                    "details" => $video->description,
+                    "videoUrl" => $video->video_url,
+                    "youtube_ID" => $video->video_id,
+                    "thumbnil_image_link" => $video->thumbnail_url,
+                    "tags" => $VideoTags,
+                    "cat_id" => $video->category_id,
+                    "sub_cat_id" => $video->sub_category_id,
+                    "duration" => $video->video_length,
+                    "author_name" => $video->video_author_name,
+                    "author_url" => $video->video_author_url,
+                ];
+                $j++;
+            }
+
+        }
+        $final = [
+            "status_code" => 200,
+            "status" => "success",
+            "SubCategoryClass" => $SubCategoryClass,
+            "VideoClass" => $VideoClass_forFeature,
+
+        ];
+
+
+        return $final;
 
 
     }

@@ -13,6 +13,21 @@ use Illuminate\Support\Facades\Redirect;
 class VideoController extends Controller
 {
 
+    public function getPath()
+    {
+        $pattern = "/.com/";
+        $server_name = $_SERVER['SERVER_NAME'];
+        //echo "Server Name:".$server_name;
+
+        $path = public_path();
+
+        if (preg_match($pattern, $server_name)) {
+
+            //$path = str_replace("ayojok_base/public", "public_html", $path);
+        }
+        //echo "<br> $path";
+        return $path;
+    }
 
     /*Video Basic Crud*/
     public function videos()
@@ -80,6 +95,29 @@ class VideoController extends Controller
         $video->description = $request->description;
         $video->thumbnail_url = $request->thumbnail_url;
         $video->video_length = $request->video_length;
+
+
+
+        /*If Thumbnail image override */
+        if($request->hasFile('profile_image')){
+            $path = $this->getPath();
+            $destinationPath = $path . '/img/video_images/';
+            $image = $request->file('profile_image');
+            $input['imagename'] = date('d_m_y_his') . '_' . $image->getClientOriginalName(); //. $image->getClientOriginalExtension();
+            //echo $input['imagename'];
+            if ($image->move($destinationPath, $input['imagename'])) {
+                $fileurl = 'img\video_images\\' . $input['imagename'];
+                //echo $fileurl;
+                //vendors::where('id', $add->id)->update(['profile_img' => $fileurl]);
+
+                $video->thumbnail_url = 'http://youtubeapp.ovie.winexsoft.com/public/'.str_replace("\\","/",$fileurl);
+            } else {
+                echo "Error";
+            }
+        }
+        /*End If Thumbnail image override */
+
+
         $video->save();
 
         foreach($request->tags as $tag){
