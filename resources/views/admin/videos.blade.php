@@ -9,14 +9,13 @@
 ?>
 
 
-
 @extends('layouts.admin')
 
 @push('css')
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
 
-    img{
+    img {
         width: 100px;
         height: 100px;
     }
@@ -25,7 +24,6 @@
 
 @section('content')
     <div class="content-wrapper">
-
 
 
         <!-- Content Header (Page header) -->
@@ -45,53 +43,89 @@
                             <a href="{{route('addVideo')}}" class="btn btn-primary">Add New Video</a>
                             <thead>
                             <tr>
-                                <th> ID</th>
-                                <th>Video Id</th>
-                                <th>Category</th>
-                                <th>Sub Category</th>
-                                <th>Tags</th>
-                                <th>Video Url</th>
-                                <th>Video Author Url</th>
-                                <th>Video Author Name</th>
-                                <th>Title</th>
+                                <th>No.</th>
+                                <th>ID</th>
+
+                                <th>Video Info</th>
+                                <th>Category + Tag Info</th>
+                                <th>Video Author Info</th>
+
+
                                 <th>description</th>
-                                <th>Thumbnail Url</th>
-                                <th>Video Length</th>
-                                <th>Action</th>
+
+                                <th colspan="2">Action</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <?php
+                            $i = 0;
+                            ?>
                             @foreach($videos as $video)
+                                <?php
+                                $i++;
+                                ?>
                                 <tr>
+                                    <td>{{$i."."}}</td>
                                     <td>{{$video->id}}</td>
-                                    <td>{{$video->video_id}}</td>
-                                    <td>{{$video->category_id}}</td>
-                                    <td>
-                                        <?php
-                                            $tags = "";
-                                            foreach($video->tags as $tag){
-                                                $tags = $tags.",".$tag->title;
-                                            }
-                                        ?>
-                                        {{$tags}}
-                                    </td>
-                                    <td>{{$video->sub_category_id}}</td>
-                                    <td>{{$video->video_url}}</td>
-                                    <td>{{$video->video_author_url}}</td>
-                                    <td>{{$video->video_author_name}}</td>
-                                    <td>{{$video->title}}</td>
-                                    <td>{{$video->description}}</td>
-                                    <td>{{$video->thumbnail_url}}</td>
-                                    <td>{{$video->video_length}}</td>
 
                                     <td>
+                                        @if(preg_match("/img/", $video->thumbnail_url) == 1)
+                                            <img src="{{asset($video->thumbnail_url)}}" style="height: 100px;width: 160px">
+
+                                        @else
+                                            <img src="{{$video->thumbnail_url}}" style="height: 100px;width: 160px">
+                                        @endif
+
+                                        <br>
+                                        <strong>Video Title:</strong> {{$video->title}}
+                                        <br>
+                                        <strong>Video Id:</strong> <a
+                                                href="{{$video->video_url}}">{{$video->video_id}}</a>
+
+                                        <br>
+                                        <strong>Video Length:</strong> {{$video->video_length}}
+
+                                    </td>
+                                    <td>
+                                        <strong>Category: </strong> {{$video->sub_category_id}}
+                                        <br>
+                                        <?php
+                                        $tags = "";
+                                        foreach ($video->tags as $tag) {
+                                            $tags = $tags . "," . $tag->title;
+                                        }
+                                        ?>
+
+                                        <strong>Sub-Category: </strong> {{$tags}}
+                                        <br>
+                                        <strong>Tags: </strong> {{$tags}}
+                                    </td>
+
+
+                                    <td>
+                                        <strong>Author: </strong> <a href="{{$video->video_author_url}}">{{$video->video_author_name}}</a>
+
+                                    </td>
+                                    <td>
+                                        <iframe width="280" height="157"
+                                                src="https://www.youtube.com/embed/{{$video->video_id}}" frameborder="0"
+                                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe>
+                                        <br>
+                                        {{$video->description}}
+                                    </td>
+
+
+                                    <td colspan="2">
                                         {{--<i class="material-icons" style="font-size:36px">delete</i>--}}
                                         <div class="row">
                                             <div class="col-sm-2">
-                                                <a href="{{route('deleteVideo',$video->id)}}"><i class="fa fa-remove" style="font-size:30px;color:red"></i></a>
+                                                <a href="{{route('deleteVideo',$video->id)}}"><i class="fa fa-remove"
+                                                                                                 style="font-size:30px;color:red"></i></a>
                                             </div>
                                             <div class="col-sm-2">
-                                                <a href="{{route('editVideo',$video->id)}}"><i class="fa fa-edit" style="font-size:30px;color:green"></i></a>
+                                                <a href="{{route('editVideo',$video->id)}}"><i class="fa fa-edit"
+                                                                                               style="font-size:30px;color:green"></i></a>
                                             </div>
                                         </div>
 
@@ -115,7 +149,6 @@
 @endsection
 
 @push('scripts')
-
 
 
 <script>

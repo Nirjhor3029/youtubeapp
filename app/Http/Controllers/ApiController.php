@@ -199,6 +199,55 @@ class ApiController extends Controller
         return $video;
     }
 
+    public function getSubCatVideos(Request $request){
+
+        $cat_id = $request->cat_id;
+        $sub_cat_id = $request->sub_cat_id;
+
+        $video_class = array();
+        //echo $cat_id.$sub_cat_id;
+
+        $videos = Video::where('category_id',$cat_id)->where('sub_category_id',$sub_cat_id)->get();
+
+        $i = 0;
+        foreach($videos as $video){
+
+            $tags = $video->tags;
+            $j = 0;
+            $all_tags = "";
+            foreach($tags as $tag){
+                $all_tags = $all_tags .",". $tag->title;
+                $j++;
+            }
+
+            $video_class[$i] = [
+                "id" => $video->id,
+                "title" => $video->title,
+                "details" => $video->description,
+                "videoUrl" => $video->video_url,
+                "youtube_ID" => $video->video_id,
+                "thumbnil_image_link" => $video->thumbnail_url,
+                "tags" => $all_tags,
+                "cat_id" => $video->category_id,
+                "sub_cat_id" => $video->sub_category_id,
+                "duration" => $video->video_length,
+                "author_name" => $video->video_author_name,
+                "author_url" => $video->video_author_url,
+            ];
+            $i++;
+
+        }
+
+        $total = [
+            "status_code" => 200,
+            "status" => "success",
+            "VideoClass" =>   $video_class,
+        ];
+
+
+        return $total;
+    }
+
     public function index()
     {
         //

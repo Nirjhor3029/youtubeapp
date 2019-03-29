@@ -17,6 +17,7 @@ class VerifyCsrfToken extends Middleware
         '/cancel',
         '/fail',
         '/ipn',
-        '/admin/get-sub-Categories'
+        '/admin/get-sub-Categories',
+        '/admin/get-subCat_videos'
     ];
 }
