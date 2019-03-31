@@ -286,6 +286,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::post('/admin/get-videoInfo-submit', 'VideoController@getVideoInfo')->name('getVideoInfo');
 
 
+    Route::get('/admin/user_log', 'AdminUsers@showUserLog')->name('userLogList');
+
 
 
 
@@ -365,6 +367,7 @@ Route::get('/admin/get-categories', 'ApiController@getCategories')->name('getAll
 Route::post('/admin/get-sub-Categories', 'ApiController@getSubCategories')->name('getAllSubCategory');
 Route::get('/admin/get-videos', 'ApiController@getAllVideos')->name('getAllVideos');
 Route::post('/admin/get-subCat_videos', 'ApiController@getSubCatVideos')->name('getSubCatVideos');
+Route::post('/admin/get-video_as_tags', 'ApiController@getVideoAsTag')->name('getVideoAsTag');
 
 
 

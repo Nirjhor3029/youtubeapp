@@ -46,7 +46,7 @@
                     </li>
 
                     <li>
-                        <a href="{{route('userList')}}">
+                        <a href="{{route('userLogList')}}">
                             <i class="fa fa-dashboard"></i> <span>User Log</span>
                         </a>
                     </li>

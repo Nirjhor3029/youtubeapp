@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\VdoCategory;
 use App\VdoSubCategory;
 use App\Video;
@@ -10,7 +11,8 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
 
-    public function getCategories(){
+    public function getCategories()
+    {
 
         $category_class = array();
         $video_class = array();
@@ -18,11 +20,11 @@ class ApiController extends Controller
         $categories = VdoCategory::with('vdoSubCategory')->with('video')->get();
 
         $i = 0;
-        foreach($categories as $category){
+        foreach ($categories as $category) {
             $category_class[$i] = [
-              "id" =>   $category->id,
-              "name" =>   $category->title,
-              "imageUrl" =>   'http://youtubeapp.ovie.winexsoft.com/public/'.str_replace("\\","/",$category->image),
+                "id" => $category->id,
+                "name" => $category->title,
+                "imageUrl" => 'http://youtubeapp.ovie.winexsoft.com/public/' . str_replace("\\", "/", $category->image),
             ];
 
             $i++;
@@ -34,13 +36,13 @@ class ApiController extends Controller
         $all_tags = array();
 
         $i = 0;
-        foreach($videos as $video){
+        foreach ($videos as $video) {
 
             $tags = $video->tags;
             $j = 0;
             $all_tags = "";
-            foreach($tags as $tag){
-                $all_tags = $all_tags .",". $tag->title;
+            foreach ($tags as $tag) {
+                $all_tags = $all_tags . "," . $tag->title;
                 $j++;
             }
 
@@ -66,8 +68,8 @@ class ApiController extends Controller
         $total = [
             "status_code" => 200,
             "status" => "success",
-            "CategoryClass" =>   $category_class,
-            "VideoClass" =>   $video_class,
+            "CategoryClass" => $category_class,
+            "VideoClass" => $video_class,
         ];
 
 
@@ -77,7 +79,8 @@ class ApiController extends Controller
         //return $categories;
     }
 
-    public function getSubCategories(Request $request){
+    public function getSubCategories(Request $request)
+    {
 
         //echo $category_id;
 
@@ -86,30 +89,27 @@ class ApiController extends Controller
         $category_id = $request->cat_id;
 
 
-
         $SubCategoryClass = array();
         $VideoClass = array();
         $VideoClass_forFeature = array();
 
 
-
-        $Subcategories = VdoSubCategory::with('video')->where('VdoCategory_id',$category_id)->get();
+        $Subcategories = VdoSubCategory::with('video')->where('VdoCategory_id', $category_id)->get();
 
         $i = 0;
-        foreach($Subcategories as $sub_category){
+        foreach ($Subcategories as $sub_category) {
 
 
             $videos = $sub_category->video;
 
             $j = 0;
             $VideoClass = null;
-            foreach($videos as $video)
-            {
+            foreach ($videos as $video) {
 
-                $VideoTags ="";
+                $VideoTags = "";
                 $tags = $video->tags;
-                foreach($tags as $tag){
-                    $VideoTags = $VideoTags .",". $tag->title;
+                foreach ($tags as $tag) {
+                    $VideoTags = $VideoTags . "," . $tag->title;
                 }
 
                 $VideoClass[$j] = [
@@ -130,12 +130,10 @@ class ApiController extends Controller
             }
 
 
-
-
-            $SubCategoryClass[$i]=[
+            $SubCategoryClass[$i] = [
                 "id" => $sub_category->id,
                 "name" => $sub_category->title,
-                "imageUrl" => 'http://youtubeapp.ovie.winexsoft.com/public/'.str_replace("\\","/",$sub_category->image),
+                "imageUrl" => 'http://youtubeapp.ovie.winexsoft.com/public/' . str_replace("\\", "/", $sub_category->image),
                 "VideoClass" => $VideoClass,
 
             ];
@@ -144,21 +142,19 @@ class ApiController extends Controller
         }
 
 
-
         $VideoClass_forFeature = null;
-        foreach($Subcategories as $sub_category){
+        foreach ($Subcategories as $sub_category) {
 
 
             $videos = $sub_category->video;
 
             $j = 0;
-            foreach($videos as $video)
-            {
+            foreach ($videos as $video) {
 
-                $VideoTags ="";
+                $VideoTags = "";
                 $tags = $video->tags;
-                foreach($tags as $tag){
-                    $VideoTags = $VideoTags .",". $tag->title;
+                foreach ($tags as $tag) {
+                    $VideoTags = $VideoTags . "," . $tag->title;
                 }
 
                 $VideoClass_forFeature[$j] = [
@@ -193,13 +189,40 @@ class ApiController extends Controller
 
     }
 
-    public function getAllVideos(){
-        $video = Video::with('tags')->get();
+    public function getAllVideos()
+    {
+        $video_class = array();
+        $videos = Video::with('tags')->get();
+        $i = 0;
+        foreach ($videos as $video) {
+            $video_class[$i] = [
+                "id" => $video->id,
+                "title" => $video->title,
+                "details" => $video->description,
+                "videoUrl" => $video->video_url,
+                "youtube_ID" => $video->video_id,
+                "thumbnil_image_link" => $video->thumbnail_url,
+                "cat_id" => $video->category_id,
+                "sub_cat_id" => $video->sub_category_id,
+                "duration" => $video->video_length,
+                "author_name" => $video->video_author_name,
+                "author_url" => $video->video_author_url,
+            ];
+            $i++;
 
-        return $video;
+        }
+
+        $total = [
+            "status_code" => 200,
+            "status" => "success",
+            "VideoClass" => $video_class,
+        ];
+
+        return $total;
     }
 
-    public function getSubCatVideos(Request $request){
+    public function getSubCatVideos(Request $request)
+    {
 
         $cat_id = $request->cat_id;
         $sub_cat_id = $request->sub_cat_id;
@@ -207,16 +230,16 @@ class ApiController extends Controller
         $video_class = array();
         //echo $cat_id.$sub_cat_id;
 
-        $videos = Video::where('category_id',$cat_id)->where('sub_category_id',$sub_cat_id)->get();
+        $videos = Video::where('category_id', $cat_id)->where('sub_category_id', $sub_cat_id)->get();
 
         $i = 0;
-        foreach($videos as $video){
+        foreach ($videos as $video) {
 
             $tags = $video->tags;
             $j = 0;
             $all_tags = "";
-            foreach($tags as $tag){
-                $all_tags = $all_tags .",". $tag->title;
+            foreach ($tags as $tag) {
+                $all_tags = $all_tags . "," . $tag->title;
                 $j++;
             }
 
@@ -241,9 +264,48 @@ class ApiController extends Controller
         $total = [
             "status_code" => 200,
             "status" => "success",
-            "VideoClass" =>   $video_class,
+            "VideoClass" => $video_class,
         ];
 
+
+        return $total;
+    }
+
+
+    public function getVideoAsTag(Request $request)
+    {
+        $tags = $request->tag;
+        //return $tags;
+        $videos = Tag::where('title', $tags)->with('videos')->get();
+        //return $videos;
+
+        $videoss = $videos[0]->videos;
+        $i = 0;
+        foreach ($videoss as $video) {
+            $video_class[$i] = [
+                "id" => $video->id,
+                "title" => $video->title,
+                "details" => $video->description,
+                "videoUrl" => $video->video_url,
+                "youtube_ID" => $video->video_id,
+                "thumbnil_image_link" => $video->thumbnail_url,
+                "cat_id" => $video->category_id,
+                "sub_cat_id" => $video->sub_category_id,
+                "duration" => $video->video_length,
+                "author_name" => $video->video_author_name,
+                "author_url" => $video->video_author_url,
+            ];
+            $i++;
+
+        }
+        $total = [
+            "status_code" => 200,
+            "status" => "success",
+            "tag_id" => $videos[0]->id,
+            "tag" => $videos[0]->title,
+
+            "VideoClass" => $video_class,
+        ];
 
         return $total;
     }
@@ -253,67 +315,36 @@ class ApiController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

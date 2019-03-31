@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Admin;
 use App\AppUserToken;
 use App\Tag;
+use App\UserLog;
 use App\VdoCategory;
 use App\VdoSubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use File;
@@ -32,11 +34,25 @@ class AdminUsers extends Controller
         return $path;
     }
 
+    public function saveUserLOg($user,$action){
+        $userLog = new UserLog();
+
+        $userLog->user_name = $user;
+        $userLog->Action = $action;
+
+        $userLog->save();
+    }
+
 
     public function showPage()
     {
         $admin_users = Admin::all();
         return view('admin.admin_users')->with('admin_users', $admin_users);
+    }
+    public function showUserLog()
+    {
+        $admin_users = UserLog::all();
+        return view('admin.user_log')->with('admin_users', $admin_users);
     }
 
     public function addNewUser()
@@ -55,6 +71,9 @@ class AdminUsers extends Controller
         $user->password = Hash::make($request->password);
 
         $user->save();
+
+
+        $this->saveUserLOg(Auth::user()->name,"Add New User || user ID ($user->id)");
 
 
         return Redirect::to('admin/users');
@@ -102,6 +121,10 @@ class AdminUsers extends Controller
         $vdo_category->image = $fileurl;
         $vdo_category->save();
 
+
+        $this->saveUserLOg(Auth::user()->name,"Add New Category || Category ID ($vdo_category->id)");
+
+
         return Redirect::to('admin/vdo-categories');
 
     }
@@ -145,9 +168,10 @@ class AdminUsers extends Controller
             File::delete($logopath);
         }
 
+        $this->saveUserLOg(Auth::user()->name,"Delete Category || Category ID ($vdo_category->id)");
+
+
         $vdo_category->delete();
-
-
 
         return Redirect::back();
     }
@@ -185,6 +209,9 @@ class AdminUsers extends Controller
         }
 
         $vdo_category->save();
+
+        $this->saveUserLOg(Auth::user()->name,"Edit Category || Category ID ($vdo_category->id)");
+
 
         return Redirect::to('admin/vdo-categories');
     }
@@ -233,6 +260,9 @@ class AdminUsers extends Controller
         $vdo_category->image = $fileurl;
         $vdo_category->save();
 
+        $this->saveUserLOg(Auth::user()->name,"Add New SubCategory || SubCategory ID ($vdo_category->id)");
+
+
         return Redirect::to('admin/vdo-subcategories');
 
     }
@@ -251,6 +281,10 @@ class AdminUsers extends Controller
         if (File::exists($logopath)) {
             File::delete($logopath);
         }
+
+        $this->saveUserLOg(Auth::user()->name,"Delete SubCategory || SubCategory ID ($vdo_category->id)");
+
+
         $vdo_category->delete();
         return Redirect::back();
     }
@@ -261,7 +295,7 @@ class AdminUsers extends Controller
         $vdo_categories = VdoCategory::all();
 
         $vdo_category = VdoSubCategory::find($id);
-        //$vdo_category->delete();
+
         return view('admin.add_videoSubCategory')->with('vdo_category', $vdo_category)->with('vdo_categories', $vdo_categories);
 
     }
@@ -293,6 +327,9 @@ class AdminUsers extends Controller
 
         $vdo_category->save();
 
+        $this->saveUserLOg(Auth::user()->name,"Edit SubCategory || SubCategory ID ($vdo_category->id)");
+
+
         return Redirect::to('admin/vdo-subcategories');
     }
 
@@ -322,6 +359,9 @@ class AdminUsers extends Controller
         $vdo_category->title = $request->vendor_title;
         $vdo_category->save();
 
+        $this->saveUserLOg(Auth::user()->name,"Add New Tag || Tag ID ($vdo_category->id)");
+
+
         return Redirect::to('admin/tags');
 
     }
@@ -330,6 +370,10 @@ class AdminUsers extends Controller
     {
         $vdo_category = Tag::find($id);
         //exit;
+
+        $this->saveUserLOg(Auth::user()->name,"Delete Tag || Tag ID ($vdo_category->id)");
+
+
         $vdo_category->delete();
         return Redirect::back();
     }
@@ -339,7 +383,7 @@ class AdminUsers extends Controller
 
 
         $vdo_category = Tag::find($id);
-        //$vdo_category->delete();
+
         return view('admin.add_videoTag')->with('vdo_category', $vdo_category);
 
     }
@@ -352,6 +396,9 @@ class AdminUsers extends Controller
         $vdo_category->title = $request->vendor_title;
 
         $vdo_category->save();
+
+        $this->saveUserLOg(Auth::user()->name,"Edit Tag || Tag ID ($vdo_category->id)");
+
 
         return Redirect::to('admin/tags');
     }
@@ -382,6 +429,10 @@ class AdminUsers extends Controller
         $vdo_category->app_token = $request->vendor_title;
         $vdo_category->save();
 
+
+        $this->saveUserLOg(Auth::user()->name,"Add New AppUserToken || AppUserToken ID ($vdo_category->id)");
+
+
         return Redirect::to('admin/appUsersToken');
 
     }
@@ -390,6 +441,8 @@ class AdminUsers extends Controller
     {
         $vdo_category = AppUserToken::find($id);
         //exit;
+        $this->saveUserLOg(Auth::user()->name,"Delete AppUserToken || AppUserToken ID ($vdo_category->id)");
+
         $vdo_category->delete();
         return Redirect::back();
     }
@@ -412,6 +465,8 @@ class AdminUsers extends Controller
         $vdo_category->app_token = $request->vendor_title;
 
         $vdo_category->save();
+
+        $this->saveUserLOg(Auth::user()->name,"Edit AppUserToken || AppUserToken ID ($vdo_category->id)");
 
         return Redirect::to('admin/appUsersToken');
     }

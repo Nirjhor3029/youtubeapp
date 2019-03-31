@@ -18,6 +18,7 @@ class VerifyCsrfToken extends Middleware
         '/fail',
         '/ipn',
         '/admin/get-sub-Categories',
-        '/admin/get-subCat_videos'
+        '/admin/get-subCat_videos',
+        '/admin/get-video_as_tags',
     ];
 }

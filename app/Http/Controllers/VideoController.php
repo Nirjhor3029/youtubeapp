@@ -83,6 +83,25 @@ class VideoController extends Controller
     {
         //return $request;
 
+        /*$newTags = $request->newTags;
+        $new_tags = explode(',',$newTags);
+
+        print_r($new_tags) ;
+        $tag_ids = array();
+        $i = 0;
+        foreach($new_tags as $new_tag){
+            $tag = new Tag();
+            $tag->title = $new_tag;
+            $tag->save();
+
+            $tag_ids[$i] = $tag->id;
+
+            $i++;
+        }
+
+        print_r($tag_ids);*/
+        //exit;
+
         $video = new Video();
 
         $video->video_id = $request->video_id;
@@ -120,6 +139,26 @@ class VideoController extends Controller
 
         $video->save();
 
+
+        /*new tag Collections*/
+        $newTags = $request->newTags;
+        $new_tags = explode(',',$newTags);
+
+        //print_r($new_tags) ;
+        $tag_ids = array();
+        $i = 0;
+        foreach($new_tags as $new_tag){
+            $tag = new Tag();
+            $tag->title = $new_tag;
+            $tag->save();
+
+            $tag_ids[$i] = $tag->id;
+
+            $i++;
+        }
+
+        //print_r($tag_ids);
+
         foreach($request->tags as $tag){
 
             $tag_video = new TagVideo();
@@ -129,10 +168,18 @@ class VideoController extends Controller
             $tag_video->save();
 
         }
+        /*New Tag Add to videos*/
+        foreach($tag_ids as $tag_id){
+
+            $tag_video = new TagVideo();
+            $tag_video->video_id = $video->id;
+            $tag_video->tag_id = $tag_id;
+            $tag_video->save();
+
+        }
 
 
-
-        return Redirect::to('admin/tags');
+        return Redirect::to('admin/videos');
 
     }
 
@@ -161,7 +208,7 @@ class VideoController extends Controller
 
         $vdo_category->save();
 
-        return Redirect::to('admin/tags');
+        return Redirect::to('admin/videos');
     }
 
 

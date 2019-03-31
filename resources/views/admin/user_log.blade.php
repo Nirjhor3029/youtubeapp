@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Sohel Rana
- * Date: 3/9/2019
- * Time: 8:45 AM
+ * Date: 3/31/2019
+ * Time: 4:37 AM
  */
 ?>
 
@@ -20,7 +20,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                User List
+                User Log
             </h1>
         </section>
 
@@ -31,13 +31,12 @@
 
                     <div class="box-body table-responsive">
                         <table id="table" class="table table-bordered">
-                            <a href="{{route('addNewUser')}}" class="btn btn-primary">Add New</a>
                             <thead>
                             <tr>
-                                <th>User ID</th>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>Email</th>
+                                <th>ID</th>
+                                <th>User Name</th>
+                                <th>Action</th>
+
 
                                 <th>Action</th>
                             </tr>
@@ -46,9 +45,8 @@
                             @foreach($admin_users as $v_admin_user)
                                 <tr>
                                     <td>{{$v_admin_user->id}}</td>
-                                    <td>{{$v_admin_user->name}}</td>
-                                    <td>{{$v_admin_user->job_title}}</td>
-                                    <td>{{$v_admin_user->email}}</td>
+                                    <td>{{$v_admin_user->user_name}}</td>
+                                    <td>{{$v_admin_user->Action}}</td>
 
                                     <td>
                                         delete [not done]

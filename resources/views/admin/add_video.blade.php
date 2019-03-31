@@ -120,7 +120,7 @@
                                             <label for="vendor_name" class="control-label">Tags<span
                                                         style="color:red;">*</span> </label>
                                         </div>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-10">
                                             <select class=" js-example-basic-multiple form-control" name="tags[]"
                                                     multiple="multiple" required>
                                                 @foreach($tags as $tag)
@@ -128,10 +128,24 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-sm-2">
+                                        {{--<div class="col-sm-2">
                                             <a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add
                                                 Tag</a>
+                                        </div>--}}
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-sm-2">
+                                            <label for="vendor_name" class="control-label">New/Extra Tags<span
+                                                        style="color:red;">*</span> </label>
                                         </div>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="newTags" placeholder="Comedy,Feature,Trend,New">
+                                        </div>
+                                        {{--<div class="col-sm-2">
+                                            <a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add
+                                                Tag</a>
+                                        </div>--}}
                                     </div>
 
 
