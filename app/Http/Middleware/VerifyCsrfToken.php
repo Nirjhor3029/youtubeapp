@@ -20,5 +20,6 @@ class VerifyCsrfToken extends Middleware
         '/admin/get-sub-Categories',
         '/admin/get-subCat_videos',
         '/admin/get-video_as_tags',
+        '/admin/get-related_videos',
     ];
 }

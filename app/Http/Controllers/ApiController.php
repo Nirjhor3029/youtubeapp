@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
 
+    public $paginated_number = 10;
+
     public function getCategories()
     {
 
@@ -105,13 +107,11 @@ class ApiController extends Controller
             $j = 0;
             $VideoClass = null;
             foreach ($videos as $video) {
-
                 $VideoTags = "";
                 $tags = $video->tags;
                 foreach ($tags as $tag) {
                     $VideoTags = $VideoTags . "," . $tag->title;
                 }
-
                 $VideoClass[$j] = [
                     "id" => $video->id,
                     "title" => $video->title,
@@ -128,8 +128,6 @@ class ApiController extends Controller
                 ];
                 $j++;
             }
-
-
             $SubCategoryClass[$i] = [
                 "id" => $sub_category->id,
                 "name" => $sub_category->title,
@@ -137,7 +135,6 @@ class ApiController extends Controller
                 "VideoClass" => $VideoClass,
 
             ];
-
             $i++;
         }
 
@@ -192,9 +189,32 @@ class ApiController extends Controller
     public function getAllVideos()
     {
         $video_class = array();
-        $videos = Video::with('tags')->get();
+        $pagination = array();
+
+        $totalVideo = Video::all()->count();
+
+        $maxPage = $totalVideo/$this->paginated_number;
+        $maxPage = round($maxPage)+1;
+        //return $totalVideo.":".$maxPage;
+
+        for($j=1;$j<=$maxPage;$j++){
+            $pagination[$j] =  $j;
+        }
+        //return $totalVideo;
+
+        $videos = Video::with('tags')->inRandomOrder()->paginate($this->paginated_number);
+
         $i = 0;
         foreach ($videos as $video) {
+
+            $tags = $video->tags;
+            $j = 0;
+            $all_tags = "";
+            foreach ($tags as $tag) {
+                $all_tags = $all_tags . "," . $tag->title;
+                $j++;
+            }
+
             $video_class[$i] = [
                 "id" => $video->id,
                 "title" => $video->title,
@@ -202,6 +222,78 @@ class ApiController extends Controller
                 "videoUrl" => $video->video_url,
                 "youtube_ID" => $video->video_id,
                 "thumbnil_image_link" => $video->thumbnail_url,
+                "tags" => $all_tags,
+                "cat_id" => $video->category_id,
+                "sub_cat_id" => $video->sub_category_id,
+                "duration" => $video->video_length,
+                "author_name" => $video->video_author_name,
+                "author_url" => $video->video_author_url,
+            ];
+            $i++;
+        }
+
+        $total = [
+            "status_code" => 200,
+            "status" => "success",
+            "pagination" => $maxPage,
+            "VideoClass" => $video_class,
+        ];
+
+        return $total;
+    }
+
+    public function getRelatedVideos(Request $request){
+
+
+        $video_class = array();
+
+        $video_id = $request->videoId;
+
+        $video = Video::with('tags')->find($video_id);
+
+        $cat_id = $video->category_id;
+        $sub_cat_id = $video->sub_category_id;
+
+        $tags = $video->tags;
+
+        //$tag_array = explode(',',$tags);
+
+        foreach($tags as $tag){
+            //echo $tag->title;
+            $tag_Videos = Tag::with('videos')->where('title',$tag->title)->get();
+            $videos = $tag_Videos[0]->videos;
+
+
+        }
+
+        //print_r($tag_array) ;
+
+        return $videos ;
+        exit;
+
+        $cat_video = Video::where('category_id',$cat_id)->inRandomOrder()->paginate(3);
+        $sub_cat_video = Video::where('sub_category_id',$sub_cat_id)->inRandomOrder()->paginate(3);
+
+
+        $i = 0;
+        foreach ($cat_video as $video) {
+
+            $tags = $video->tags;
+            $j = 0;
+            $all_tags = "";
+            foreach ($tags as $tag) {
+                $all_tags = $all_tags . "," . $tag->title;
+                $j++;
+            }
+
+            $video_class[$i] = [
+                "id" => $video->id,
+                "title" => $video->title,
+                "details" => $video->description,
+                "videoUrl" => $video->video_url,
+                "youtube_ID" => $video->video_id,
+                "thumbnil_image_link" => $video->thumbnail_url,
+                "tags" => $all_tags,
                 "cat_id" => $video->category_id,
                 "sub_cat_id" => $video->sub_category_id,
                 "duration" => $video->video_length,
@@ -212,28 +304,7 @@ class ApiController extends Controller
 
         }
 
-        $total = [
-            "status_code" => 200,
-            "status" => "success",
-            "VideoClass" => $video_class,
-        ];
-
-        return $total;
-    }
-
-    public function getSubCatVideos(Request $request)
-    {
-
-        $cat_id = $request->cat_id;
-        $sub_cat_id = $request->sub_cat_id;
-
-        $video_class = array();
-        //echo $cat_id.$sub_cat_id;
-
-        $videos = Video::where('category_id', $cat_id)->where('sub_category_id', $sub_cat_id)->get();
-
-        $i = 0;
-        foreach ($videos as $video) {
+        foreach ($sub_cat_video as $video) {
 
             $tags = $video->tags;
             $j = 0;
@@ -267,21 +338,44 @@ class ApiController extends Controller
             "VideoClass" => $video_class,
         ];
 
-
         return $total;
+
+        //return $cat_id.":".$sub_cat_id.":".$tags;
+
     }
 
-
-    public function getVideoAsTag(Request $request)
+    public function getSubCatVideos(Request $request)
     {
-        $tags = $request->tag;
-        //return $tags;
-        $videos = Tag::where('title', $tags)->with('videos')->get();
-        //return $videos;
 
-        $videoss = $videos[0]->videos;
+        $video_class = array();
+        $pagination = array();
+
+
+
+        $cat_id = $request->cat_id;
+        $sub_cat_id = $request->sub_cat_id;
+
+        $totalVideo = Video::where('category_id', $cat_id)->where('sub_category_id', $sub_cat_id)->count();
+
+        $maxPage = $totalVideo/$this->paginated_number;
+        $maxPage = round($maxPage)+1;
+
+        $video_class = array();
+        //echo $cat_id.$sub_cat_id;
+
+        $videos = Video::where('category_id', $cat_id)->where('sub_category_id', $sub_cat_id)->inRandomOrder()->paginate($this->paginated_number);
+
         $i = 0;
-        foreach ($videoss as $video) {
+        foreach ($videos as $video) {
+
+            $tags = $video->tags;
+            $j = 0;
+            $all_tags = "";
+            foreach ($tags as $tag) {
+                $all_tags = $all_tags . "," . $tag->title;
+                $j++;
+            }
+
             $video_class[$i] = [
                 "id" => $video->id,
                 "title" => $video->title,
@@ -289,6 +383,56 @@ class ApiController extends Controller
                 "videoUrl" => $video->video_url,
                 "youtube_ID" => $video->video_id,
                 "thumbnil_image_link" => $video->thumbnail_url,
+                "tags" => $all_tags,
+                "cat_id" => $video->category_id,
+                "sub_cat_id" => $video->sub_category_id,
+                "duration" => $video->video_length,
+                "author_name" => $video->video_author_name,
+                "author_url" => $video->video_author_url,
+            ];
+            $i++;
+
+        }
+
+        $total = [
+            "status_code" => 200,
+            "status" => "success",
+            "pagination" => $maxPage,
+            "VideoClass" => $video_class,
+        ];
+
+
+        return $total;
+    }
+
+    public function getVideoAsTag(Request $request)
+    {
+        $tags = $request->tag;
+        //return $tags;
+        $videos = Tag::where('title', $tags)->with('videos')->inRandomOrder()->paginate($this->paginated_number);
+        //return $videos;
+
+        $videoss = $videos[0]->videos;
+        $i = 0;
+        foreach ($videoss as $video) {
+
+            $tags = $video->tags;
+            $j = 0;
+            $all_tags = "";
+            foreach ($tags as $tag) {
+                $all_tags = $all_tags . "," . $tag->title;
+                $j++;
+            }
+
+
+            $video_class[$i] = [
+                "id" => $video->id,
+                "title" => $video->title,
+                "details" => $video->description,
+                "videoUrl" => $video->video_url,
+                "youtube_ID" => $video->video_id,
+                "thumbnil_image_link" => $video->thumbnail_url,
+                "tags" => $all_tags,
                 "cat_id" => $video->category_id,
                 "sub_cat_id" => $video->sub_category_id,
                 "duration" => $video->video_length,

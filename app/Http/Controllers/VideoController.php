@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Tag;
 use App\TagVideo;
+use App\UserLog;
 use App\VdoCategory;
 use App\VdoSubCategory;
 use App\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class VideoController extends Controller
@@ -27,6 +29,15 @@ class VideoController extends Controller
         }
         //echo "<br> $path";
         return $path;
+    }
+
+    public function saveUserLOg($user,$action){
+        $userLog = new UserLog();
+
+        $userLog->user_name = $user;
+        $userLog->Action = $action;
+
+        $userLog->save();
     }
 
     /*Video Basic Crud*/
@@ -178,6 +189,8 @@ class VideoController extends Controller
 
         }
 
+        $this->saveUserLOg(Auth::user()->name,"Add New Video || Video ID ($video->id)");
+
 
         return Redirect::to('admin/videos');
 
@@ -187,6 +200,10 @@ class VideoController extends Controller
     {
         $vdo_category = Tag::find($id);
         //exit;
+
+        $this->saveUserLOg(Auth::user()->name,"Delete Video || Video ID ($vdo_category->id)");
+
+
         $vdo_category->delete();
         return Redirect::back();
     }
@@ -207,6 +224,9 @@ class VideoController extends Controller
         $vdo_category->title = $request->vendor_title;
 
         $vdo_category->save();
+
+        $this->saveUserLOg(Auth::user()->name,"Edit Video || Video ID ($vdo_category->id)");
+
 
         return Redirect::to('admin/videos');
     }
