@@ -369,6 +369,7 @@ Route::get('/admin/get-videos', 'ApiController@getAllVideos')->name('getAllVideo
 Route::post('/admin/get-subCat_videos', 'ApiController@getSubCatVideos')->name('getSubCatVideos');
 Route::post('/admin/get-video_as_tags', 'ApiController@getVideoAsTag')->name('getVideoAsTag');
 Route::post('/admin/get-related_videos', 'ApiController@getRelatedVideos')->name('getRelatedVideos');
+Route::get('/admin/get-all_tags', 'ApiController@getAllTags')->name('getAllTags');
 
 
 
