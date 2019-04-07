@@ -16,8 +16,8 @@
 <style>
 
     img {
-        width: 100px;
-        height: 100px;
+        width: 50px;
+        height: 60px;
     }
 </style>
 @endpush
@@ -70,20 +70,14 @@
 
                                     <td>
                                         @if(preg_match("/img/", $video->thumbnail_url) == 1)
-                                            <img src="{{asset($video->thumbnail_url)}}" style="height: 100px;width: 160px">
-
+                                            <a href="{{asset($video->thumbnail_url)}}" target="_blank"><img  src="{{asset($video->thumbnail_url)}}" style="height: 60px;width: 80px"></a>
                                         @else
-                                            <img src="{{$video->thumbnail_url}}" style="height: 100px;width: 160px">
+                                            <a href="{{$video->thumbnail_url}}" target="_blank"><img src="{{$video->thumbnail_url}}" style="height: 100px;width: 160px"></a>
                                         @endif
 
                                         <br>
                                         <strong>Video Title:</strong> {{$video->title}}
-                                        <br>
-                                        <strong>Video Id:</strong> <a
-                                                href="{{$video->video_url}}">{{$video->video_id}}</a>
 
-                                        <br>
-                                        <strong>Video Length:</strong> {{$video->video_length}}
 
                                     </td>
                                     <td>
@@ -105,12 +99,18 @@
                                     <td>
                                         <strong>Author: </strong> <a href="{{$video->video_author_url}}">{{$video->video_author_name}}</a>
 
+                                        <br>
+                                        <strong>Video Id:</strong> <a
+                                                href="{{$video->video_url}}">{{$video->video_id}}</a>
+
+                                        <br>
+                                        <strong>Video Length:</strong> {{$video->video_length}}
                                     </td>
                                     <td>
-                                        <iframe width="280" height="157"
+                                        {{--<iframe width="280" height="157"
                                                 src="https://www.youtube.com/embed/{{$video->video_id}}" frameborder="0"
                                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                                allowfullscreen></iframe>
+                                                allowfullscreen></iframe>--}}
                                         <br>
                                         {{$video->description}}
                                     </td>
