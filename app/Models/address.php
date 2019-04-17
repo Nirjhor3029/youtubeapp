@@ -12,6 +12,8 @@ class address extends Model
 
     protected $data = ['created_at','updated_at'];
 
+
+
     public function user(){
       return $this->belongsTo('App\user');
     }

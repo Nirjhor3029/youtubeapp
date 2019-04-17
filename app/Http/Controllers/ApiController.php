@@ -12,6 +12,7 @@ class ApiController extends Controller
 {
 
     public $paginated_number = 10;
+    public $Feature_paginated_number = 10;
 
     public function getCategories()
     {
@@ -32,7 +33,7 @@ class ApiController extends Controller
             $i++;
         }
 
-        $videos = Video::with('tags')->get();
+        $videos = Video::where('feature',1)->with('tags')->inRandomOrder()->paginate($this->Feature_paginated_number);
 
         //return $videos;
         $all_tags = array();
@@ -84,7 +85,7 @@ class ApiController extends Controller
     public function getSubCategories(Request $request)
     {
 
-        //echo $category_id;
+        //echo "do";
 
         //exit;
 
@@ -141,10 +142,15 @@ class ApiController extends Controller
 
 
         $VideoClass_forFeature = null;
-        foreach ($Subcategories as $sub_category) {
+//        foreach ($Subcategories as $sub_category) {
 
 
-            $videos = $sub_category->video;
+            $videos = Video::where('category_id',$category_id)
+                ->where('feature',1)
+                ->with('tags')
+                ->inRandomOrder()
+                ->paginate($this->Feature_paginated_number);
+            //$videos = $sub_category->video;
 
             $j = 0;
             foreach ($videos as $video) {
@@ -172,7 +178,10 @@ class ApiController extends Controller
                 $j++;
             }
 
-        }
+//        }
+
+
+
         $final = [
             "status_code" => 200,
             "status" => "success",
@@ -525,6 +534,143 @@ class ApiController extends Controller
         return $total;
     }
 
+
+    public function getSingleVideoInfo(Request $request){
+        //echo $request->videoId;
+        $video_id =  $request->videoId;
+        $video = Video::find($video_id);
+
+
+
+
+        $tags = $video->tags;
+        $j = 0;
+        $all_tags = "";
+        foreach ($tags as $tag) {
+            $all_tags = $all_tags . "," . $tag->title;
+            $j++;
+        }
+
+        $video_class = [
+            "id" => $video->id,
+            "title" => $video->title,
+            "details" => $video->description,
+            "videoUrl" => $video->video_url,
+            "youtube_ID" => $video->video_id,
+            "thumbnil_image_link" => $video->thumbnail_url,
+            "tags" => $all_tags,
+            "cat_id" => $video->category_id,
+            "sub_cat_id" => $video->sub_category_id,
+            "duration" => $video->video_length,
+            "author_name" => $video->video_author_name,
+            "author_url" => $video->video_author_url,
+        ];
+
+
+
+
+        $total = [
+            "status_code" => 200,
+            "status" => "success",
+            "pagination" => 0,
+            "tag_id" => 0,
+            "tag" => "Nothing",
+            "cat_id" => 0,
+            "sub_cat_id" => 0,
+            "VideoClass" => $video_class,
+        ];
+
+
+        return $total;
+        //return $video;
+    }
+
+    public function getSingleVideoInfoGet($video_id){
+        //echo $video_id;
+        $video = Video::find($video_id);
+
+
+
+
+        $tags = $video->tags;
+        $j = 0;
+        $all_tags = "";
+        foreach ($tags as $tag) {
+            $all_tags = $all_tags . "," . $tag->title;
+            $j++;
+        }
+
+        $video_class = [
+            "id" => $video->id,
+            "title" => $video->title,
+            "details" => $video->description,
+            "videoUrl" => $video->video_url,
+            "youtube_ID" => $video->video_id,
+            "thumbnil_image_link" => $video->thumbnail_url,
+            "tags" => $all_tags,
+            "cat_id" => $video->category_id,
+            "sub_cat_id" => $video->sub_category_id,
+            "duration" => $video->video_length,
+            "author_name" => $video->video_author_name,
+            "author_url" => $video->video_author_url,
+        ];
+
+
+
+
+        $total = [
+            "status_code" => 200,
+            "status" => "success",
+            "pagination" => 0,
+            "tag_id" => 0,
+            "tag" => "Nothing",
+            "cat_id" => 0,
+            "sub_cat_id" => 0,
+            "VideoClass" => $video_class,
+        ];
+
+
+        return $total;
+    }
+
+    public function getData(){
+        //echo "all";
+        $url = 'http://localhost/nirjhor/youtube/youtube_Final/youtubeapp/public/admin/get-single_videoInfo_get/6'; // path to your JSON file
+        $data = file_get_contents($url); // put the contents of the file into a variable
+        $characters = json_decode($data); // decode the JSON feed
+
+        //echo  $characters->VideoClass->id;
+
+         $id = $characters->VideoClass->id;
+         $title = $characters->VideoClass->title;
+         $videoUrl = $characters->VideoClass->videoUrl;
+         $youtube_ID = $characters->VideoClass->youtube_ID;
+         $tags = $characters->VideoClass->tags;
+         $author_name = $characters->VideoClass->author_name;
+         $thumbnil_image_link = $characters->VideoClass->thumbnil_image_link;
+
+
+        /*if(isset($_GET['id'])){
+            $url = 'http://localhost/nirjhor/youtube/youtube_Final/youtubeapp/public/admin/get-single_videoInfo_get/6'; // path to your JSON file
+            $data = file_get_contents($url); // put the contents of the file into a variable
+            $characters = json_decode($data); // decode the JSON feed
+
+            //echo  $characters->VideoClass->id;
+
+            $id = $characters->VideoClass->id;
+            $title = $characters->VideoClass->title;
+            $videoUrl = $characters->VideoClass->videoUrl;
+            $youtube_ID = $characters->VideoClass->youtube_ID;
+            $tags = $characters->VideoClass->tags;
+            $author_name = $characters->VideoClass->author_name;
+            $thumbnil_image_link = $characters->VideoClass->thumbnil_image_link;
+        }*/
+
+        //return $data;
+
+        //echo $characters[0]->status_code;
+
+    }
     public function index()
     {
         //

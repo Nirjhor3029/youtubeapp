@@ -17,6 +17,24 @@
         width: 300px;
         height: 200px;
     }
+
+
+
+
+    .double {
+        zoom: 2;
+        transform: scale(2);
+        -ms-transform: scale(2);
+        -webkit-transform: scale(2);
+        -o-transform: scale(2);
+        -moz-transform: scale(2);
+        transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        -webkit-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        -moz-transform-origin: 0 0;
+        -webkit-transform-origin: 0 0;
+    }
 </style>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
@@ -260,8 +278,19 @@
                                         </div>
                                     </div>
 
+                                    <div class="row form-group">
+                                        <div class="col-sm-2">
+                                            <label for="vendor_name" class="control-label">Feature ? <span
+                                                        style="color:red;">*</span> </label>
+                                        </div>
+                                        <div class="col-sm-10 double">
+                                            {{--<input type="checkbox" class="form-control" name="checkbox" >--}}
+                                            <input type="checkbox" name="feature" value="1" >
+                                        </div>
+                                    </div>
 
-                                    <div>
+
+                                    <div class="" style="margin-top: 50px">
                                         <button class="btn btn-primary pull-right" type="submit">Upload Video Info
                                         </button>
                                     </div>

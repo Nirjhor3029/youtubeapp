@@ -92,6 +92,7 @@ class VideoController extends Controller
 
     public function addVideoSubmit(Request $request)
     {
+
         //return $request;
 
         /*$newTags = $request->newTags;
@@ -113,6 +114,9 @@ class VideoController extends Controller
         print_r($tag_ids);*/
         //exit;
 
+
+
+
         $video = new Video();
 
         $video->video_id = $request->video_id;
@@ -125,6 +129,16 @@ class VideoController extends Controller
         $video->description = $request->description;
         $video->thumbnail_url = $request->thumbnail_url;
         $video->video_length = $request->video_length;
+
+        if(isset($request->feature)){
+            $video->feature = 1;
+        }else{
+            $video->feature = 0;
+
+        }
+
+        $video->user_id = Auth::user()->id;
+
 
 
 

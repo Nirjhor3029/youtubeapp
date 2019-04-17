@@ -371,6 +371,14 @@ Route::post('/admin/get-video_as_tags', 'ApiController@getVideoAsTag')->name('ge
 Route::post('/admin/get-related_videos', 'ApiController@getRelatedVideos')->name('getRelatedVideos');
 Route::get('/admin/get-all_tags', 'ApiController@getAllTags')->name('getAllTags');
 
+Route::get('/admin/getData', 'ApiController@getData')->name('getData');
+
+Route::post('/admin/get-single_videoInfo', 'ApiController@getSingleVideoInfo')->name('getSingleVideoInfo');
+Route::get('/admin/get-single_videoInfo_get/{id}', 'ApiController@getSingleVideoInfoGet')->name('getSingleVideoInfoGet');
+
+
+
+
 
 
 
