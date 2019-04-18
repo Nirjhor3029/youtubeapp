@@ -674,6 +674,63 @@ class ApiController extends Controller
 
 
     public function searchByTitle(Request $request){
+        // "ok";
+        //return $request;
+        $video_class = array();
+
+        $title = $request->title;
+
+
+        $totalVideo = Video::where('title','LIKE','%'.$title.'%')->inRandomOrder()->count();
+
+        //return $totalVideo;
+
+        $maxPage = $totalVideo / $this->paginated_number;
+        $maxPage = round($maxPage) + 1;
+
+        $videos = Video::where('title','LIKE','%'.$title.'%')->inRandomOrder()->paginate($this->paginated_number);
+
+        $i = 0;
+        foreach ($videos as $video) {
+
+            $tags = $video->tags;
+            $j = 0;
+            $all_tags = "";
+            foreach ($tags as $tag) {
+                $all_tags = $all_tags . "," . $tag->title;
+                $j++;
+            }
+
+            $video_class[$i] = [
+                "id" => $video->id,
+                "title" => $video->title,
+                "details" => $video->description,
+                "videoUrl" => $video->video_url,
+                "youtube_ID" => $video->video_id,
+                "thumbnil_image_link" => $video->thumbnail_url,
+                "tags" => $all_tags,
+                "cat_id" => $video->category_id,
+                "sub_cat_id" => $video->sub_category_id,
+                "duration" => $video->video_length,
+                "author_name" => $video->video_author_name,
+                "author_url" => $video->video_author_url,
+            ];
+            $i++;
+
+        }
+
+        $total = [
+            "status_code" => 200,
+            "status" => "success",
+            "pagination" => $maxPage,
+            "tag_id" => 0,
+            "tag" => "Nothing",
+            "cat_id" => 0,
+            "sub_cat_id" => 0,
+
+            "VideoClass" => $video_class,
+        ];
+        return $total;
 
     }
     public function index()
