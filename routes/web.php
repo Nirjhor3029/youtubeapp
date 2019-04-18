@@ -375,6 +375,7 @@ Route::get('/admin/getData', 'ApiController@getData')->name('getData');
 
 Route::post('/admin/get-single_videoInfo', 'ApiController@getSingleVideoInfo')->name('getSingleVideoInfo');
 Route::get('/admin/get-single_videoInfo_get/{id}', 'ApiController@getSingleVideoInfoGet')->name('getSingleVideoInfoGet');
+Route::post('/admin/Search_by_title', 'ApiController@searchByTitle')->name('searchByTitle');
 
 
 

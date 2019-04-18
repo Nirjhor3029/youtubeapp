@@ -671,6 +671,11 @@ class ApiController extends Controller
         //echo $characters[0]->status_code;
 
     }
+
+
+    public function searchByTitle(Request $request){
+
+    }
     public function index()
     {
         //
